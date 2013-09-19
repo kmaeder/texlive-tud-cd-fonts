@@ -9,10 +9,10 @@ pkgrel=1
 pkgdesc="TeX Live - TU Dresden corporate design fonts"
 license=('custom:tud-cd-fonts')
 arch=('any')
-depends=('texlive-core')
+depends=('texlive-core' 'git')
 url=("latex.wcms-file3.tu-dresden.de/phpBB3/index.php")
 install=texlive.install
-source=("DIN_Bd_PS.zip" "Univers_PS.zip" "git://github.com/kmaeder/texlive-tud-cd-fonts.git")
+source=("DIN_Bd_PS.zip" "Univers_PS.zip" "git://github.com/kmaeder/${pkgname}.git")
 md5sums=('SKIP' 'SKIP' 'SKIP')
 
 # if you change the path here make sure to change it in texlive.install too
@@ -41,17 +41,7 @@ build() {
 	mv -f uvcz____.afm aubr8a.afm
 
 echo ">>> create latex font and metric files"
-# cat > convertfonts.tex <<%EOF
-# \\input fontinst.sty
-# \\needsfontinstversion{1.933}
-# \\recordtransforms{tud-cd-fonts-rec.tex}
-# \\latinfamily{din}{}
-# \\latinfamily{aun}{}
-# \\latinfamily{aub}{}
-# \\endrecordtransforms
-# \\bye
-# %EOF
-latex texlive-tud-cd-fonts/convertfonts.tex
+latex $pkgname/convertfonts.tex
 
 # now we have files of type .afm .fd, .mtx, .pfb, .pl, .vpl
 echo ">>> convert font and metric files to machine readable format"
@@ -64,16 +54,7 @@ for f in *.vpl ; do
 done
 
 echo ">>> create map files"
-# rm convert.tex
-# cat > createmap.tex <<%EOF
-# \\input finstmsc.sty
-# \\resetstr{PSfontsuffix}{.pfb}
-# \\adddriver{dvips}{tud-cd-fonts.map}
-# \\input tud-cd-fonts-rec.tex
-# \\donedrivers
-# \\bye
-# %EOF
-latex texlive-tud-cd-fonts/createmap.tex
+latex $pkgname/createmap.tex
 }
 
 package() {
@@ -89,5 +70,5 @@ package() {
 	cp *.pfb $pkgdir$TEXPATH/fonts/type1/adobe/tud-cd-fonts/
 	cp tud-cd-fonts.map $pkgdir$TEXPATH/fonts/map
 
-	install -D -m 644 texlive-tud-cd-fonts/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE:tud-cd-fonts"
+	install -D -m 644 $pkgname/LICENSE "$pkgdir/usr/share/licenses/$pkgname/LICENSE:tud-cd-fonts"
 }
