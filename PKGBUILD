@@ -51,16 +51,16 @@ echo ">>> create latex font and metric files"
 # \\endrecordtransforms
 # \\bye
 # %EOF
-latex texlive-tud-cd-fonts/convertfonts.tex 1> /dev/null
+latex texlive-tud-cd-fonts/convertfonts.tex
 
 # now we have files of type .afm .fd, .mtx, .pfb, .pl, .vpl
 echo ">>> convert font and metric files to machine readable format"
 for f in *.pl ; do
-    pltotf $f 1> /dev/null
+    pltotf $f
 done
 
 for f in *.vpl ; do
-    vptovf $f 1> /dev/null
+    vptovf $f
 done
 
 echo ">>> create map files"
@@ -73,7 +73,7 @@ echo ">>> create map files"
 # \\donedrivers
 # \\bye
 # %EOF
-latex texlive-tud-cd-fonts/createmap.tex 1> /dev/null
+latex texlive-tud-cd-fonts/createmap.tex
 }
 
 package() {
