@@ -41,7 +41,7 @@ build() {
 	mv -f uvcz____.afm aubr8a.afm
 
 echo ">>> create latex font and metric files"
-# cat > convert.tex <<%EOF
+# cat > convertfonts.tex <<%EOF
 # \\input fontinst.sty
 # \\needsfontinstversion{1.933}
 # \\recordtransforms{tud-cd-fonts-rec.tex}
@@ -65,7 +65,7 @@ done
 
 echo ">>> create map files"
 # rm convert.tex
-# cat > convert.tex <<%EOF
+# cat > createmap.tex <<%EOF
 # \\input finstmsc.sty
 # \\resetstr{PSfontsuffix}{.pfb}
 # \\adddriver{dvips}{tud-cd-fonts.map}
