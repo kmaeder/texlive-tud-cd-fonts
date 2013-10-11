@@ -13,6 +13,8 @@ updmap-sys --quiet --cnffile $TEXPATH/web2c/updmap.cfg
 echo ">>> done."
 }
 post_upgrade() {
+# for upgrade from version 0.1
+	sed -i "s#Map tud-cd-fonts.map#Map dinbold.map\nMap univers.map#" $TEXPATH/web2c/updmap.cfg
 	echo ">>> texlive: regenerate TeX database"
 	mktexlsr --quiet
 	echo ">>> texlive: regenerate updmap"
